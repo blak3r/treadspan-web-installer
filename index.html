@@ -84,7 +84,6 @@
 
         alert("WiFi config file generated! Now select the file and flash the device.");
     }
-
     document.getElementById("wifiConfig").addEventListener("change", async function(event) {
         const file = event.target.files[0];
         if (!file) {
@@ -94,29 +93,33 @@
 
         const reader = new FileReader();
         reader.onload = function(event) {
-            const base64Data = btoa(String.fromCharCode(...new Uint8Array(event.target.result)));
+            const arrayBuffer = event.target.result;
+            const base64Data = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 
-            console.log("Generated Base64 Data URL:", base64Data); // ✅ Debugging
+            console.log("Generated Base64 Data URL:", `data:application/octet-stream;base64,${base64Data}`);
 
-            // ✅ Correctly set manifest with Base64 inline file
+            // ✅ Properly assign the manifest as an object (not a string)
             const manifestObject = {
-                "name": "ESP32 Web Installer",
-                "builds": [
+                name: "ESP32 Web Installer",
+                builds: [
                     {
-                        "chipFamily": "ESP32-S3",
-                        "parts": [
-                            { "path": "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", "offset": 65536 },
-                            { "path": "data:application/octet-stream;base64," + base64Data, "offset": 3211264 }
+                        chipFamily: "ESP32-S3",
+                        parts: [
+                            { path: "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", offset: 65536 },
+                            { path: `data:application/octet-stream;base64,${base64Data}`, offset: 3211264 }
                         ]
                     }
                 ]
             };
 
+            // ✅ Assign the object directly (DO NOT use setAttribute)
             document.querySelector("esp-web-install-button").manifest = manifestObject;
         };
 
         reader.readAsArrayBuffer(file);
     });
+
+
 
 
 
