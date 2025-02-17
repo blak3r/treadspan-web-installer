@@ -6,12 +6,12 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "https://blak3r.github.io/treadspan-web-installer/releases/0.9.1_arduino-nano-esp32.ino.bin",
-          "offset": 0x10000
+          "path": "https://blak3r.github.io/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bin",
+          "offset": 65536
         },
         {
           "path": "wifi_config.bin",
-          "offset": 0xE000
+          "offset": 3211264
         }
       ]
     }
