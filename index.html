@@ -94,13 +94,11 @@
 
         const reader = new FileReader();
         reader.onload = function(event) {
-            const arrayBuffer = event.target.result;
-            const blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
-            const url = URL.createObjectURL(blob);
+            const base64Data = btoa(String.fromCharCode(...new Uint8Array(event.target.result)));
 
-            console.log("Generated Blob URL:", url); // ✅ Debugging: Ensure the blob URL is correct
-            alert("here");
-                // ✅ Ensure we're passing an object and NOT a stringified version
+            console.log("Generated Base64 Data URL:", base64Data); // ✅ Debugging
+
+            // ✅ Correctly set manifest with Base64 inline file
             const manifestObject = {
                 "name": "ESP32 Web Installer",
                 "builds": [
@@ -108,7 +106,7 @@
                         "chipFamily": "ESP32-S3",
                         "parts": [
                             { "path": "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", "offset": 65536 },
-                            { "path": url, "offset": 3211264 }
+                            { "path": "data:application/octet-stream;base64," + base64Data, "offset": 3211264 }
                         ]
                     }
                 ]
@@ -116,8 +114,10 @@
 
             document.querySelector("esp-web-install-button").manifest = manifestObject;
         };
+
         reader.readAsArrayBuffer(file);
     });
+
 
 
 </script>
