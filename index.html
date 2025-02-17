@@ -98,8 +98,10 @@
             const blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
             const url = URL.createObjectURL(blob);
 
-            // ✅ Properly set manifest as an object
-            document.querySelector("esp-web-install-button").manifest = {
+            console.log("Generated Blob URL:", url); // ✅ Debugging: Ensure the blob URL is correct
+
+            // ✅ Ensure we're passing an object and NOT a stringified version
+            const manifestObject = {
                 "name": "ESP32 Web Installer",
                 "builds": [
                     {
@@ -111,9 +113,12 @@
                     }
                 ]
             };
+
+            document.querySelector("esp-web-install-button").manifest = manifestObject;
         };
         reader.readAsArrayBuffer(file);
     });
+
 
 </script>
 </body>
