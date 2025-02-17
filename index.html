@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Treadspan ESP Web Installer</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@9.1.0/dist/web/install-button.js"></script>
+</head>
+<body>
+    <h2>ESP Web Installer</h2>
+    <label for="ssid">WiFi SSID:</label>
+    <input type="text" id="ssid" placeholder="Enter WiFi SSID"><br>
+    <label for="password">WiFi Password:</label>
+    <input type="password" id="password" placeholder="Enter WiFi Password"><br>
+    <button onclick="generateConfig()">Generate Config & Flash</button>
+    
+    <esp-web-install-button id="installer" 
+        manifest="manifest.json">
+    </esp-web-install-button>
+    
+    <script>
+        async function generateConfig() {
+            const ssid = document.getElementById("ssid").value;
+            const password = document.getElementById("password").value;
+            
+            if (!ssid || !password) {
+                alert("Please enter WiFi credentials.");
+                return;
+            }
+            
+            const encoder = new TextEncoder();
+            const data = encoder.encode(ssid.padEnd(32, '\0') + password.padEnd(32, '\0'));
+            
+            const blob = new Blob([data], { type: "application/octet-stream" });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "wifi_config.bin";
+            link.click();
+            
+            alert("WiFi config file generated! Now click 'Install' to flash the device.");
+        }
+    </script>
+</body>
+</html>
