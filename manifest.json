@@ -1,12 +1,12 @@
 {
-  "name": "ESP32 WiFi Setup",
+  "name": "Treadspan",
   "version": "1.0",
   "builds": [
     {
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "https://yourgithub.io/firmware.bin",
+          "path": "https://blak3r.github.io/treadspan-web-installer/releases/0.9.1_arduino-nano-esp32.ino.bin",
           "offset": 0x10000
         },
         {
