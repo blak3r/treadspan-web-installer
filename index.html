@@ -98,22 +98,23 @@
             const blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
             const url = URL.createObjectURL(blob);
 
-            // ✅ Convert Blob URL to String
-            document.querySelector("esp-web-install-button").setAttribute("manifest", JSON.stringify({
+            // ✅ Properly set manifest as an object
+            document.querySelector("esp-web-install-button").manifest = {
                 "name": "ESP32 Web Installer",
                 "builds": [
                     {
                         "chipFamily": "ESP32-S3",
                         "parts": [
                             { "path": "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", "offset": 65536 },
-                            { "path": url.toString(), "offset": 3211264 }
+                            { "path": url, "offset": 3211264 }
                         ]
                     }
                 ]
-            }));
+            };
         };
         reader.readAsArrayBuffer(file);
     });
+
 </script>
 </body>
 </html>
