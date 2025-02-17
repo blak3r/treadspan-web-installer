@@ -37,7 +37,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>ESP Web Installer</h2>
+    <h2>TreadSpan - Hardware Firmware Web Installer2</h2>
     <label for="ssid">WiFi SSID:</label>
     <input type="text" id="ssid" placeholder="Enter WiFi SSID"><br>
     <label for="password">WiFi Password:</label>
@@ -85,7 +85,7 @@
         alert("WiFi config file generated! Now select the file and flash the device.");
     }
 
-    document.getElementById("wifiConfig").addEventListener("change", function(event) {
+    document.getElementById("wifiConfig").addEventListener("change", async function(event) {
         const file = event.target.files[0];
         if (!file) {
             alert("Please select the wifi_config.bin file.");
@@ -98,18 +98,19 @@
             const blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
             const url = URL.createObjectURL(blob);
 
-            document.querySelector("esp-web-install-button").manifest = {
+            // ✅ Convert Blob URL to String
+            document.querySelector("esp-web-install-button").setAttribute("manifest", JSON.stringify({
                 "name": "ESP32 Web Installer",
                 "builds": [
                     {
                         "chipFamily": "ESP32-S3",
                         "parts": [
                             { "path": "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", "offset": 65536 },
-                            { "path": url, "offset": 3211264 }
+                            { "path": url.toString(), "offset": 3211264 }
                         ]
                     }
                 ]
-            };
+            }));
         };
         reader.readAsArrayBuffer(file);
     });
