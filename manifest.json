@@ -1,18 +1,14 @@
 {
-  "name": "Treadspan",
+  "name": "Treadspan Web Installer",
   "version": "1.0",
+  "improvSerial": true,
   "builds": [
     {
       "chipFamily": "ESP32",
       "parts": [
-        {
-          "path": "https://blak3r.github.io/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bin",
-          "offset": 65536
-        },
-        {
-          "path": "wifi_config.bin",
-          "offset": 3211264
-        }
+        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bootloader.bin", "offset": 4096 },
+        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.partitions.bin", "offset": 32768 },
+        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bin", "offset": 65536 }
       ]
     }
   ]

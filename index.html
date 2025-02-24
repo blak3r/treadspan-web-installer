@@ -18,14 +18,12 @@
             max-width: 500px;
             margin: auto;
         }
-        input, button {
-            margin: 10px;
-            padding: 8px;
+        button {
+            margin-top: 20px;
+            padding: 10px;
             width: 80%;
             border-radius: 5px;
             border: 1px solid #ccc;
-        }
-        button {
             background-color: #007BFF;
             color: white;
             cursor: pointer;
@@ -37,92 +35,11 @@
 </head>
 <body>
 <div class="container">
-    <h2>TreadSpan - Hardware Firmware Web Installer2</h2>
-    <label for="ssid">WiFi SSID:</label>
-    <input type="text" id="ssid" placeholder="Enter WiFi SSID"><br>
-    <label for="password">WiFi Password:</label>
-    <input type="password" id="password" placeholder="Enter WiFi Password"><br>
-    <button onclick="generateConfig()">Generate Config</button>
-
-    <h3>Select WiFi Config File:</h3>
-    <input type="file" id="wifiConfig">
-    <br>
-    <esp-web-install-button id="installer"></esp-web-install-button>
+    <h2>ESP Web Installer</h2>
+    <esp-web-install-button
+        manifest="/treadspan-web-installer/manifest.json"
+        improvSerial="true"
+    </esp-web-install-button>
 </div>
-
-<script>
-    function generateConfig() {
-        const ssid = document.getElementById("ssid").value;
-        const password = document.getElementById("password").value;
-
-        if (!ssid || !password) {
-            alert("Please enter WiFi credentials.");
-            return;
-        }
-
-        const ssidBytes = new Uint8Array(32);
-        const passwordBytes = new Uint8Array(32);
-
-        const encoder = new TextEncoder();
-        const encodedSSID = encoder.encode(ssid);
-        const encodedPassword = encoder.encode(password);
-
-        ssidBytes.set(encodedSSID.slice(0, 31));
-        passwordBytes.set(encodedPassword.slice(0, 31));
-
-        ssidBytes[31] = 0;
-        passwordBytes[31] = 0;
-
-        const data = new Uint8Array([...ssidBytes, ...passwordBytes]);
-        const blob = new Blob([data], { type: "application/octet-stream" });
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "wifi_config.bin";
-        link.click();
-
-        alert("WiFi config file generated! Now select the file and flash the device.");
-    }
-    document.getElementById("wifiConfig").addEventListener("change", async function(event) {
-        const file = event.target.files[0];
-        if (!file) {
-            alert("Please select the wifi_config.bin file.");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const arrayBuffer = event.target.result;
-            const base64Data = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-
-            console.log("Generated Base64 Data URL:", `data:application/octet-stream;base64,${base64Data}`);
-
-            // ✅ Properly assign the manifest as an object (not a string)
-            const manifestObject = {
-                name: "ESP32 Web Installer",
-                builds: [
-                    {
-                        chipFamily: "ESP32-S3",
-                        parts: [
-                            { path: "https://blak3r.github.io/treadspan-web-installer/lifespan-ble-proxy.bin", offset: 65536 },
-                            { path: `data:application/octet-stream;base64,${base64Data}`, offset: 3211264 }
-                        ]
-                    }
-                ]
-            };
-
-            // ✅ Assign the object directly (DO NOT use setAttribute)
-            document.querySelector("esp-web-install-button").manifest = manifestObject;
-        };
-
-        reader.readAsArrayBuffer(file);
-    });
-
-
-
-
-
-</script>
 </body>
 </html>
