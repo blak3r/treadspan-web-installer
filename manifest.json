@@ -6,9 +6,10 @@
     {
       "chipFamily": "ESP32",
       "parts": [
-        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bootloader.bin", "offset": 4096 },
-        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.partitions.bin", "offset": 32768 },
-        { "path": "http://localhost:63342/treadspan-web-installer/releases/lifespan-ble-proxy.ino.bin", "offset": 65536 }
+        {
+          "path" :  "/treadspan-web-installer/releases/esp32-0.9.3-treadspan.ino.merged.bin",
+          "offset": 0
+        }
       ]
     }
   ]
