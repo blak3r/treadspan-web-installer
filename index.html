@@ -7,8 +7,12 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 40px;
+            margin: 0;
+            padding: 40px;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .container {
             background: white;
@@ -17,6 +21,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             margin: auto;
+        }
+        ol {
+            list-style-position: inside;
+            padding: 0;
         }
         button {
             margin-top: 20px;
@@ -31,15 +39,43 @@
         button:hover {
             background-color: #0056b3;
         }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: #eaeaea;
+            padding: 10px;
+        }
+        footer a {
+            text-decoration: none;
+            color: #007BFF;
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>TreadSpan</h2>
+    <img src="/treadspan-web-installer/img/logo-and-title.jpg" alt="TreadSpan Installer Logo" width="500">
+    <!--    <img src="/treadspan-web-installer/img/ttgo-picture.jpg" alt="Target Hardware Picture" width="300">-->
+
+    <ol>
+        <li>Connect your chip to your computer using a USB-C Cable that supports data</li>
+        <li>Press the Connect Button and select the port (if you don't see usb-serial, install drivers)</li>
+        <li>Let it run (it'll take 2 minutes)</li>
+        <li>When finished you will configure WiFi on the device.</li>
+    </ol>
+
     <esp-web-install-button
-        manifest="/treadspan-web-installer/manifest.json"
-        improvSerial="true"
-    </esp-web-install-button>
+            manifest="/treadspan-web-installer/manifest.json"
+            improvSerial="true"
+    ></esp-web-install-button>
 </div>
+
+<footer>
+    <a href="https://github.com/blak3r/treadspan">TreadSpan Home</a> |
+    <a href="https://github.com/blak3r/treadspan/discussions">TreadSpan Support</a>
+</footer>
 </body>
 </html>
