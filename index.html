@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>TreadSpan Installer</title>
-    <script type="module" src="https://unpkg.com/esp-web-tools@9.1.0/dist/web/install-button.js"></script>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,9 +62,9 @@
 
     <ol>
         <li>Connect your chip to your computer using a USB-C Cable that supports data</li>
-        <li>Press the Connect Button and select the port (if you don't see usb-serial, install drivers)</li>
+        <li>Press the Connect Button and select the port (if you don't see usb-serial, install CP2102 drivers) - also you might try flipping the USB cable around make sure it's getting power.</li>
         <li>Let it run (it'll take 2 minutes)</li>
-        <li>When finished you will configure WiFi on the device.</li>
+        <li>After it's finished, a dialog window will come up which will give you option to Set Wifi.  Do that! </li>
     </ol>
 
     <esp-web-install-button
