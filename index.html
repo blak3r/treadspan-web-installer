@@ -19,7 +19,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 750px;
             margin: auto;
         }
         ol {
@@ -60,26 +60,26 @@
     <img src="/treadspan-web-installer/img/logo-and-title.jpg" alt="TreadSpan Installer Logo" width="500">
 
     <ol>
-        <li>Connect <a href="https://amzn.to/41yT6GH">your chip</a> you purchased to your computer using a USB-C Cable that supports data.</li>
+        <li>Connect <a href="https://amzn.to/41yT6GH">the ESP32 module</a> you purchased to your computer using a USB-C Cable that supports data.</li>
         <li>Press the blue "Connect" Button below and select the port (if you don't see usb-serial,
             <a href="https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads" target="_blank">install CP2102 drivers</a>
             ) - also you might try flipping the USB cable around make sure it's getting power.</li>
         <li>Once connected, choose the "Install Treadspan Web Installer". Allow it to install for about 2 minutes.</li>
         <li>After it's finished, a dialog window will come up which will give you option to Set Wifi.  Do that! </li>
     </ol>
-
     <small>
     If you get stuck, here's a video showing the process from start to finish:
     </small>
     <br/>
     <a href="https://youtu.be/1UJMbb7URYI" target="_blank"><img src="/treadspan-web-installer/img/youtube-thumbnail.png" alt="TreadSpan Install Walkthrough" width="400"></a>
     <br/>
-    <br/>
 
     <esp-web-install-button
             manifest="/treadspan-web-installer/manifest.json"
             improvSerial="true"
     ></esp-web-install-button>
+
+
 </div>
 
 <footer>
