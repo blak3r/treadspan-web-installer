@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <title>TreadSpan Installer</title>
     <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
     <style>
@@ -39,6 +40,12 @@
         button:hover {
             background-color: #0056b3;
         }
+        select {
+            margin-top: 20px;
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+        }
         footer {
             position: fixed;
             bottom: 0;
@@ -60,31 +67,78 @@
     <img src="/treadspan-web-installer/img/logo-and-title.jpg" alt="TreadSpan Installer Logo" width="500">
 
     <ol>
-        <li>Connect <a href="https://amzn.to/41yT6GH">the ESP32 module</a> you purchased to your computer using a USB-C Cable that supports data.</li>
-        <li>Press the blue "Connect" Button below and select the port (if you don't see usb-serial,
-            <a href="https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads" target="_blank">install CP2102 drivers</a>
-            ) - also you might try flipping the USB cable around make sure it's getting power.</li>
-        <li>Once connected, choose the "Install Treadspan Web Installer". Allow it to install for about 2 minutes.</li>
-        <li>After it's finished, a dialog window will come up which will give you option to Set Wifi.  Do that! </li>
+        <li>Connect <a href="https://amzn.to/41yT6GH">the ESP32 module</a> to your computer using a USB-C Cable that supports data.</li>
+        <li>Press the blue "Connect" button below and select the port (if you don't see usb-serial, <a href="https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads" target="_blank">install CP2102 drivers</a>)</li>
+        <li>Once connected, choose "Install Treadspan" and wait ~2 minutes.</li>
+        <li>After install, a dialog will appear to Set WiFi. Be sure to do that!</li>
     </ol>
-    <small>
-    If you get stuck, here's a video showing the process from start to finish:
-    </small>
-    <br/>
-    <a href="https://youtu.be/1UJMbb7URYI" target="_blank"><img src="/treadspan-web-installer/img/youtube-thumbnail.png" alt="TreadSpan Install Walkthrough" width="400"></a>
-    <br/>
 
-    <esp-web-install-button
-            manifest="/treadspan-web-installer/manifest.json"
-            improvSerial="true"
-    ></esp-web-install-button>
+    <small>If you're stuck, watch the full walkthrough:</small><br>
+    <a href="https://youtu.be/1UJMbb7URYI" target="_blank">
+        <img src="/treadspan-web-installer/img/youtube-thumbnail.png" alt="TreadSpan Install Walkthrough" width="400">
+    </a>
 
+    <h3>Select your firmware variant:</h3>
+    <select id="variant-select">
+        <option value="FTMS">Bluetooth FTMS (most common - supports most treadmills)</option>
+        <option value="Lifespan Omni">Lifespan Omni</option>
+<!--        <option value="Lifespan Retro">Lifespan Retro</option>-->
+<!--        <option value="Urevo">Urevo</option>-->
+    </select>
 
+    <div id="install-container" style="margin-top: 30px;">
+        <!-- Button injected here -->
+    </div>
 </div>
 
 <footer>
     <a href="https://github.com/blak3r/treadspan">TreadSpan Home</a> |
     <a href="https://github.com/blak3r/treadspan/discussions">TreadSpan Support</a>
 </footer>
+
+<script type="module">
+    const manifestUrl = "/treadspan-web-installer/manifest.json";
+    const installContainer = document.getElementById("install-container");
+    const select = document.getElementById("variant-select");
+
+    async function renderInstallButton() {
+        const selectedVariant = select.value;
+
+        const fullManifest = await fetch(manifestUrl).then(r => r.json());
+        const matchingBuild = fullManifest.builds.find(b => b.name === selectedVariant);
+
+        if (!matchingBuild) {
+            alert("No matching firmware found.");
+            return;
+        }
+
+        const baseUrl = window.location.origin;
+
+        // 🔧 Fix relative path to absolute
+        matchingBuild.parts.forEach(part => {
+            part.path = new URL(part.path, baseUrl).toString();
+        });
+
+        const filteredManifest = {
+            name: `${fullManifest.name} (${selectedVariant})`,
+            version: fullManifest.version,
+            improvSerial: fullManifest.improvSerial,
+            builds: [matchingBuild]
+        };
+
+        const blob = new Blob([JSON.stringify(filteredManifest)], { type: 'application/json' });
+        const blobUrl = URL.createObjectURL(blob);
+
+        installContainer.innerHTML = "";
+        const button = document.createElement("esp-web-install-button");
+        button.setAttribute("manifest", blobUrl);
+        button.setAttribute("improvSerial", "true");
+        installContainer.appendChild(button);
+    }
+
+
+    select.addEventListener("change", renderInstallButton);
+    renderInstallButton(); // Initial load
+</script>
 </body>
 </html>
