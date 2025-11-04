@@ -1,6 +1,6 @@
 {
   "name": "Treadspan Web Installer",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "improvSerial": true,
   "builds": [
     {
@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "/treadspan-web-installer/releases/lifespan-omni/treadspan.ino.merged.bin",
+          "path": "/treadspan-web-installer/releases/lifespan-omni/firmware.bin",
           "offset": 0
         }
       ]
@@ -18,7 +18,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "/treadspan-web-installer/releases/lifespan-retro/treadspan.ino.merged.bin",
+          "path": "/treadspan-web-installer/releases/lifespan-retro/firmware.bin",
           "offset": 0
         }
       ]
@@ -28,7 +28,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "/treadspan-web-installer/releases/urevo/treadspan.ino.merged.bin",
+          "path": "/treadspan-web-installer/releases/urevo/firmware.bin",
           "offset": 0
         }
       ]
@@ -38,17 +38,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "/treadspan-web-installer/releases/ftms/factory.bin",
-          "offset": 0
-        }
-      ]
-    },
-    {
-      "name": "FTMS-2",
-      "chipFamily": "ESP32",
-      "parts": [
-        {
-          "path": "/treadspan-web-installer/releases/ftms/factory.bin",
+          "path": "/treadspan-web-installer/releases/ftms/firmware.bin",
           "offset": 0
         }
       ]
