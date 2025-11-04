@@ -1,6 +1,6 @@
 {
   "name": "Treadspan Web Installer",
-  "version": "1.1.10",
+  "version": "1.2.12",
   "improvSerial": true,
   "builds": [
     {
@@ -38,7 +38,17 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "/treadspan-web-installer/releases/ftms/treadspan.ino.merged.bin",
+          "path": "/treadspan-web-installer/releases/ftms/factory.bin",
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "name": "FTMS-2",
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "/treadspan-web-installer/releases/ftms/factory.bin",
           "offset": 0
         }
       ]
